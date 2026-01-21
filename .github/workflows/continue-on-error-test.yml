@@ -1,0 +1,26 @@
+name: Test COE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  outside-step:
+    runs-on: ubuntu-latest
+    steps:
+      - id: step1
+        run: exit 1
+        if: always()
+      - id: step2
+        run: exit 0
+        if: always()
+
+  inside-step:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        continue-on-error: true
+        if: always()
+      - run: exit 1
+        if: always()
+      - run: exit 0
+        if: always()
